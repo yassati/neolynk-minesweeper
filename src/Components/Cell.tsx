@@ -4,6 +4,7 @@ import { CellStatus } from '../Domain/Cell';
 type CellProps = {
     status: CellStatus;
     onclick: Function;
+    index: number;
 };
 
 const emojis = {
@@ -11,6 +12,18 @@ const emojis = {
     dug: '',
     flagged: '🚩',
     detonated: '💥',
+};
+
+const getBackgroundColor = (status: CellStatus): string => {
+    switch (status) {
+        case 'untouched':
+        case 'flagged':
+            return '#0055ff';
+        case 'detonated':
+            return '#000000';
+        default:
+            return '#ff0000';
+    }
 };
 
 const cellStyle = (status: CellStatus): React.CSSProperties => ({
@@ -21,8 +34,7 @@ const cellStyle = (status: CellStatus): React.CSSProperties => ({
     border: '1px solid black',
     boxSizing: 'border-box',
     cursor: 'pointer',
-    backgroundColor:
-        status === 'untouched' || status === 'flagged' ? '#ccc' : undefined,
+    backgroundColor: getBackgroundColor(status),
 });
 
 export const Cell: React.FunctionComponent<CellProps> = props => {

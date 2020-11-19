@@ -3,6 +3,18 @@ import { GameContext } from '../GameContext';
 import { Cell } from './Cell';
 import { Game } from './Game';
 
+const wrapper: React.CSSProperties = {
+    height: '100%',
+    width: '100%',
+    backgroundImage:
+        'linear-gradient(to right top, #d16ba5, #c777b9, #ba83ca, #aa8fd8, #9a9ae1, #8aa7ec, #79b3f4, #69bff8, #52cffe, #41dfff, #46eefa, #5ffbf1)',
+    display: 'flex',
+    flexFlow: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignContent: 'center',
+};
+
 export const Grid: React.FunctionComponent = () => {
     const { grid, updateGridCellStatus } = React.useContext(GameContext);
 
@@ -16,7 +28,8 @@ export const Grid: React.FunctionComponent = () => {
         false;
 
     return (
-        <React.Fragment>
+        <div style={wrapper}>
+            <h1>MINESWEEPER</h1>
             <Game gameOver={gameOver} />
             <div
                 style={{
@@ -30,6 +43,7 @@ export const Grid: React.FunctionComponent = () => {
                 {grid.map((cell, index) => (
                     <Cell
                         key={index}
+                        index={index}
                         status={cell.status}
                         onclick={(ev: MouseEvent) =>
                             handleClick(index, ev.button)
@@ -37,6 +51,6 @@ export const Grid: React.FunctionComponent = () => {
                     />
                 ))}
             </div>
-        </React.Fragment>
+        </div>
     );
 };
