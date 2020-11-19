@@ -38,6 +38,7 @@ export const Grid: React.FunctionComponent = () => {
                     boxSizing: 'content-box',
                     flexWrap: 'wrap',
                     width: `calc(40px * ${grid.column})`,
+                    boxShadow: '1px 3px 16px #0000003D',
                 }}
             >
                 {grid.map((cell, index) => (
