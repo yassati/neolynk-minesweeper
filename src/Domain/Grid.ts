@@ -6,6 +6,7 @@ export class Grid {
     [key: number]: number;
     private _column: number;
     private _cells: Cells;
+    private static _lastRef: Grid | undefined;
 
     static generate(row: number, column: number, minesCount: number): Grid {
         const length = row * column;
@@ -96,6 +97,7 @@ export class Grid {
     }
 
     sendActionToCell(cellIndex: number, action: CellAction): Grid {
+        Grid._lastRef = this;
         const cells = [...this._cells];
         const cell = cells[cellIndex];
 
@@ -121,6 +123,20 @@ export class Grid {
         }
         return true;
     };
+
+    undoLastAction() {
+        if (Grid._lastRef) {
+            const lastRef = Grid._lastRef;
+            Grid._lastRef = undefined;
+            return lastRef;
+        }
+
+        return new Grid(this._column, this._cells);
+    }
+
+    get lastRef() {
+        return Grid._lastRef;
+    }
 
     get column() {
         return this._column;

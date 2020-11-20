@@ -16,12 +16,15 @@ const wrapper: React.CSSProperties = {
 };
 
 export const Grid: React.FunctionComponent = () => {
-    const { grid, updateGridCellStatus } = React.useContext(GameContext);
-
+    const { grid, updateGridCellStatus, undoGridAction } = React.useContext(
+        GameContext
+    );
     const handleClick = (index: number, button: number) => {
         updateGridCellStatus(index, button === 0 ? 'dig' : 'flag');
     };
-
+    const handleUndoAction = () => {
+        undoGridAction();
+    };
     const gameOver =
         (grid.isDefeated() && 'defeat') ||
         (grid.isVictorious() && 'victory') ||
@@ -53,6 +56,12 @@ export const Grid: React.FunctionComponent = () => {
                     />
                 ))}
             </div>
+            <button
+                onClick={() => handleUndoAction()}
+                disabled={grid.lastRef === undefined}
+            >
+                Undo
+            </button>
         </div>
     );
 };

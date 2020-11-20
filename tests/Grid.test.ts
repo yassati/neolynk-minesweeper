@@ -112,4 +112,17 @@ describe(Grid, () => {
             expect(mineCount).toBe(10);
         });
     });
+
+    describe('undo', () => {
+        test('gets back to previous grid when canceling shot', () => {
+            const withBomb = Cell.withBomb();
+            const withoutBomb = Cell.withoutBomb();
+            const grid = new Grid(3, [withBomb, withoutBomb, withBomb]);
+
+            const dugGrid = grid.sendActionToCell(2, 'dig');
+            const canceledGrid = dugGrid.undoLastAction();
+
+            expect(canceledGrid).toEqual(grid);
+        });
+    });
 });
