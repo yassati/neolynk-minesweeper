@@ -5,14 +5,15 @@ type CellProps = {
     status: CellStatus;
     onclick: Function;
     index: number;
+    adjacentMines: number;
 };
 
-const emojis = {
+const cellDisplay = (adjacentMines: number) => ({
     untouched: '',
-    dug: '',
+    dug: adjacentMines === 0 ? '' : adjacentMines,
     flagged: '🚩',
     detonated: '💥',
-};
+});
 
 const getBackgroundColor = (status: CellStatus): string => {
     switch (status) {
@@ -35,6 +36,7 @@ const cellStyle = (status: CellStatus): React.CSSProperties => ({
     boxSizing: 'border-box',
     cursor: 'pointer',
     backgroundColor: getBackgroundColor(status),
+    color: 'white',
 });
 
 export const Cell: React.FunctionComponent<CellProps> = props => {
@@ -50,7 +52,7 @@ export const Cell: React.FunctionComponent<CellProps> = props => {
             }}
             style={cellStyle(props.status)}
         >
-            {emojis[props.status]}
+            {cellDisplay(props.adjacentMines)[props.status]}
         </div>
     );
 };

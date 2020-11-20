@@ -40,6 +40,31 @@ describe(Grid, () => {
         });
     });
 
+    describe('getAdjacentCellsMineCount', () => {
+        test('it returns 0 when there are no bombs around it', () => {
+            const withBomb = Cell.withBomb();
+            const withoutBomb = Cell.withoutBomb();
+            const grid = new Grid(2, [
+                withBomb,
+                withoutBomb,
+                withoutBomb,
+                withoutBomb,
+            ]);
+
+            const adjacentMineCount = grid.getAdjacentCellsMineCount(0);
+            expect(adjacentMineCount).toBe(0);
+        });
+
+        test('it returns 2 when there are 2 bombs around it', () => {
+            const withBomb = Cell.withBomb();
+            const withoutBomb = Cell.withoutBomb();
+            const grid = new Grid(3, [withBomb, withoutBomb, withBomb]);
+
+            const adjacentMineCount = grid.getAdjacentCellsMineCount(1);
+            expect(adjacentMineCount).toBe(2);
+        });
+    });
+
     describe('generator', () => {
         const row = 10;
         const column = row;
